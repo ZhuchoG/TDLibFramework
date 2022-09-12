@@ -316,10 +316,6 @@ jobs:
         working-directory: ./builder
         run: ./merge-frameworks.sh "iOS macOS"
 
-      # - name: Archive XCFramework
-      #   working-directory: ./builder/build
-      #   run: zip -r TDLibFramework.zip TDLibFramework.xcframework
-
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -355,13 +351,13 @@ jobs:
           TDLIB_COMMIT_URL=${{ env.TDLIB_REPO }}/tree/$TDLIB_COMMIT
           echo "TDLIB_COMMIT_URL=$TDLIB_COMMIT_URL" >> $GITHUB_ENV
 
-          RELEASE_TAG=$TDLIB_VERSION-$TDLIB_COMMIT
+          RELEASE_TAG=$TDLIB_VERSION
           echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
 
       - name: Download XCFramework
         uses: actions/download-artifact@v2
         with:
-          name: TDLibFramework.zip
+          name: TDLibFramework.xcframework
           path: ${{ env.ARTIFACT_DIR }}
 
       - name: Get Checksum
