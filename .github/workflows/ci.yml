@@ -360,23 +360,23 @@ jobs:
           name: TDLibFramework.xcframework
           path: ${{ env.ARTIFACT_DIR }}
 
-      - name: Get Checksum
-        run: echo "ARTIFACT_CHECKSUM=$(shasum ${{ env.ARTIFACT_PATH }})" >> $GITHUB_ENV
+      # - name: Get Checksum
+      #   run: echo "ARTIFACT_CHECKSUM=$(shasum ${{ env.ARTIFACT_PATH }})" >> $GITHUB_ENV
 
-      - name: Update Package.swift
-        run: |
-          python3 scripts/swift_package_generator.py "${{ env.RELEASES_DOWNLOAD_URL }}/${{ env.RELEASE_TAG }}/${{ env.ARTIFACT_NAME }}" ${{ env.ARTIFACT_CHECKSUM }}
-          git add Package.swift || true
-          git commit -m "[no ci] Bump tdlib ${{ env.RELEASE_TAG }}" || true
-          git push origin main || true
+      # - name: Update Package.swift
+      #   run: |
+      #     python3 scripts/swift_package_generator.py "${{ env.RELEASES_DOWNLOAD_URL }}/${{ env.RELEASE_TAG }}/${{ env.ARTIFACT_NAME }}" ${{ env.ARTIFACT_CHECKSUM }}
+      #     git add Package.swift || true
+      #     git commit -m "[no ci] Bump tdlib ${{ env.RELEASE_TAG }}" || true
+      #     git push origin main || true
 
-      - name: Remove previous release
-        uses: dev-drprasad/delete-tag-and-release@85fa8bcea0379a6ada9bbfdcb0a9d24d58e1a0d7
-        with:
-          delete_release: true
-          tag_name: ${{ env.RELEASE_TAG }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Remove previous release
+      #   uses: dev-drprasad/delete-tag-and-release@85fa8bcea0379a6ada9bbfdcb0a9d24d58e1a0d7
+      #   with:
+      #     delete_release: true
+      #     tag_name: ${{ env.RELEASE_TAG }}
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Release
         uses: softprops/action-gh-release@9729932bfb75c05ad1f6e3a729294e05abaa7001
