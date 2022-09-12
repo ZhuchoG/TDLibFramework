@@ -153,48 +153,6 @@ jobs:
           path: ./builder/build/${{ env.PLATFORM }}.xcarchive
           if-no-files-found: error
 
-  build-framework-iOS-simulator:
-    runs-on: macos-12
-    needs: [build-tdlib-iOS-simulator]
-    env:
-      PLATFORM: iOS-simulator
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          submodules: recursive
-
-      - name: Download Openssl
-        uses: actions/download-artifact@v2
-        with:
-          name: openssl-${{ env.PLATFORM }}
-          path: td/example/ios/third_party/openssl/${{ env.PLATFORM }}
-
-      - name: Download TDLib ${{ env.PLATFORM }} install
-        uses: actions/download-artifact@v2
-        with:
-          name: tdlib-install-${{ env.PLATFORM }}
-          path: td/example/ios/build/install-${{ env.PLATFORM }}
-
-      - name: Patch headers
-        working-directory: ./builder
-        run: ./patch-headers.sh
-
-      - name: Generate project
-        working-directory: ./builder
-        run: TUIST_PLATFORM=$PLATFORM ../.tuist-bin/tuist generate
-
-      - name: Build .framework
-        working-directory: ./builder
-        run: ./build-framework.sh $PLATFORM
-
-      - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: xcarchive-${{ env.PLATFORM }}
-          path: ./builder/build/${{ env.PLATFORM }}.xcarchive
-          if-no-files-found: error
-
   # macOS
   build-openssl-macOS:
     runs-on: macos-12
