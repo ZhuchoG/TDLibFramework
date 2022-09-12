@@ -975,10 +975,10 @@ jobs:
       - build-framework-iOS
       - build-framework-iOS-simulator
       - build-framework-macOS
-      - build-framework-watchOS
-      - build-framework-watchOS-simulator
-      - build-framework-tvOS
-      - build-framework-tvOS-simulator
+      # - build-framework-watchOS
+      # - build-framework-watchOS-simulator
+      # - build-framework-tvOS
+      # - build-framework-tvOS-simulator
     steps:
       - name: Checkout
         uses: actions/checkout@v2
